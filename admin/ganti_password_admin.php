@@ -81,13 +81,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <?php endif; ?>
 
     <form action="" method="post">
-        <label>Username:</label><br>
+        <label>Username :</label><br>
         <input type="text" name="username" value="<?= htmlspecialchars($username) ?>" readonly required><br>
 
-        <label for="new_password">Password Baru:</label><br>
+        <label for="new_password">Password Baru :</label><br>
         <input type="password" name="new_password" id="new_password" required><br>
 
-        <label for="confirm_password">Konfirmasi Password Baru:</label><br>
+        <label for="confirm_password">Konfirmasi Password Baru :</label><br>
         <input type="password" name="confirm_password" id="confirm_password" required><br>
 
         <button type="submit">Ganti Password</button>

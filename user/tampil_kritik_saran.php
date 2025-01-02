@@ -35,7 +35,7 @@ $stmt->close();
     <iframe src="../user/profile.php" height="0" width="0" style="display:noneflex;visibility:hidden"></iframe>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tampil Kritik & Saran</title>
+    <title>Tampil Kritik&Saran</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="../bootstrap-5.3.3-dist/css/bootstrap.css">
     <link href="../template/profile.css" rel="stylesheet">
@@ -52,12 +52,12 @@ $stmt->close();
         </li>
         <li>
             <a href="../user/tampil_kritik_saran.php" target="frame">
-                <i class="fas fa-comments"></i> Kritik & Saran Anda
+                <i class="fas fa-comments"></i> Kritik&Saran Anda
             </a>
         </li>
         <li>
             <a href="../user/kritik_saran.php" target="frame">
-                <i class="fas fa-pencil-alt"></i> Tambah Kritik & Saran
+                <i class="fas fa-pencil-alt"></i> Tambah Kritik&Saran
             </a>
         </li>
         <li>
@@ -69,7 +69,7 @@ $stmt->close();
         </ul>
     </div>
     <div class="container">
-        <h2 class="text-center mb-4">Kritik & Saran Anda</h2>
+        <h2 class="text-center mb-4">Kritik&Saran Anda</h2>
         <!-- Form Filter -->
         <form method="post" action="" class="mb-4">
             <div class="filter-container">
@@ -116,7 +116,7 @@ $stmt->close();
                 </table>
         </div>
     <?php else : ?>
-        <p class="text-center text-warning">Kritik & Saran tidak ditemukan!</p>
+        <p class="text-center text-warning">Kritik&Saran tidak ditemukan!</p>
     <?php endif; ?>
     </div>
 

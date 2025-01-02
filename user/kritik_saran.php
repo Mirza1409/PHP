@@ -51,12 +51,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </li>
         <li>
             <a href="../user/tampil_kritik_saran.php" target="frame">
-                <i class="fas fa-comments"></i> Kritik & Saran Anda
+                <i class="fas fa-comments"></i> Kritik&Saran Anda
             </a>
         </li>
         <li>
             <a href="../user/kritik_saran.php" target="frame">
-                <i class="fas fa-pencil-alt"></i> Tambah Kritik & Saran
+                <i class="fas fa-pencil-alt"></i> Tambah Kritik&Saran
             </a>
         </li>
         <li>
@@ -76,12 +76,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </li>
         <li>
             <a href="../user/tampil_kritik_saran.php" target="frame">
-                <i class="fas fa-comments"></i> Kritik & Saran Anda
+                <i class="fas fa-comments"></i> Kritik&Saran Anda
             </a>
         </li>
         <li>
             <a href="../user/kritik_saran.php" target="frame">
-                <i class="fas fa-pencil-alt"></i> Tambah Kritik & Saran
+                <i class="fas fa-pencil-alt"></i> Tambah Kritik&Saran
             </a>
         </li>
         <li>
@@ -93,7 +93,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
     <div class="container">
         <div class="form-container">
-            <h2 class="text-center">Kritik & Saran</h2>
+            <h2 class="text-center">Kritik&Saran</h2>
 
             <?php if (isset($error)) : ?>
                 <div class="alert alert-danger" role="alert">
@@ -108,7 +108,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <form method="post">
                 <div class="form-data mb-3">
-                    <label for="isi_kritiksaran" class="form-label">Isi Kritik & Saran:</label>
+                    <label for="isi_kritiksaran" class="form-label">Isi Kritik&Saran:</label>
                     <textarea name="isi_kritiksaran" id="isi_kritiksaran" class="form-control" rows="5" required></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary">Kirim</button>

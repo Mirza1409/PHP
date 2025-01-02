@@ -41,12 +41,12 @@ if ($result->num_rows > 0) {
         </li>
         <li>
             <a href="../user/tampil_kritik_saran.php" target="frame">
-                <i class="fas fa-comments"></i> Kritik & Saran Anda
+                <i class="fas fa-comments"></i> Kritik&Saran Anda
             </a>
         </li>
         <li>
             <a href="../user/kritik_saran.php" target="frame">
-                <i class="fas fa-pencil-alt"></i> Tambah Kritik & Saran
+                <i class="fas fa-pencil-alt"></i> Tambah Kritik&Saran
             </a>
         </li>
         <li>
@@ -65,14 +65,14 @@ if ($result->num_rows > 0) {
             <?php if (!empty($members)) : ?>
                 <?php foreach ($members as $member) : ?>
                     <h3>Selamat datang, <?= htmlspecialchars($_SESSION['user']['username']) ?>!</h3>
-                    <p><i class="fas fa-user"></i> <strong>Nama:</strong> <?= htmlspecialchars($member['username']) ?></p>
-                    <p><i class="fas fa-venus"></i> <strong>Jenis Kelamin:</strong> <?= htmlspecialchars($member['jenis_kelamin']) ?></p>
-                    <p><i class="fas fa-map-marker-alt"></i> <strong>Alamat:</strong> <?= htmlspecialchars($member['alamat']) ?></p>
-                    <p><i class="fas fa-id-badge"></i> <strong>Status Member:</strong> <?= htmlspecialchars($member['status']) ?></p>
-                    <p><i class="fas fa-phone"></i> <strong>No HP:</strong> <?= htmlspecialchars($member['no_hp']) ?></p>
-                    <p><i class="fas fa-user-tag"></i> <strong>Jenis Member:</strong> <?= htmlspecialchars($member['jenis_member']) ?></p>
-                    <p><i class="fas fa-calendar-alt"></i> <strong>Berlaku sampai Dengan:</strong> <?= htmlspecialchars($member['berlaku_s_d']) ?></p>
-                    <p><i class="fas fa-hourglass-half"></i> <strong>Sisa Masa Berlaku:</strong>
+                    <p><i class="fas fa-user"></i> <strong>Nama :</strong> <?= htmlspecialchars($member['username']) ?></p>
+                    <p><i class="fas fa-venus"></i> <strong>Jenis Kelamin :</strong> <?= htmlspecialchars($member['jenis_kelamin']) ?></p>
+                    <p><i class="fas fa-map-marker-alt"></i> <strong>Alamat :</strong> <?= htmlspecialchars($member['alamat']) ?></p>
+                    <p><i class="fas fa-id-badge"></i> <strong>Status Member :</strong> <?= htmlspecialchars($member['status']) ?></p>
+                    <p><i class="fas fa-phone"></i> <strong>No HP :</strong> <?= htmlspecialchars($member['no_hp']) ?></p>
+                    <p><i class="fas fa-user-tag"></i> <strong>Jenis Member :</strong> <?= htmlspecialchars($member['jenis_member']) ?></p>
+                    <p><i class="fas fa-calendar-alt"></i> <strong>Berlaku sampai Dengan :</strong> <?= htmlspecialchars($member['berlaku_s_d']) ?></p>
+                    <p><i class="fas fa-hourglass-half"></i> <strong>Sisa Masa Berlaku :</strong>
                         <?php
                         $berlaku_s_d = new DateTime($member['berlaku_s_d']);
                         $today = new DateTime();
