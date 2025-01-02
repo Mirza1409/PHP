@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if ($user['role'] === 'admin') {
                 header('Location: admin/dashboard.php');
             } else {
-                header('Location: user/tampil_profile.php');
+                header('Location: user/profile.php');
             }
             exit;
         }

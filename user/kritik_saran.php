@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <h2>Menu</h2>
         <ul>
         <li>
-            <a href="../user/tampil_profile.php" target="frame">
+            <a href="../user/profile.php" target="frame">
                 <i class="fas fa-user"></i> Profil
             </a>
         </li>

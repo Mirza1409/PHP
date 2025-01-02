@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
                      SET status = 'Sudah Ditanggapi', tanggapan = '$tanggapan' 
                      WHERE id_kritiksaran = $id_kritiksaran";
     mysqli_query($conn, $update_query);
-    redirect('kritik_saran.php');
+    redirect('kritik_saran_tanggapan.php');
 }
 ?>
 <!DOCTYPE html>
