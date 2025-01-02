@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if ($stmt->execute()) {
             $success = "Kritik dan saran berhasil dikirim!";
-            redirect("tampil_kritik_saran.php");
+
         } else {
             $error = "Gagal mengirim kritik dan saran: " . $stmt->error;
         }
@@ -29,24 +29,92 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+    <iframe src="../user/profile.php" height="0" width="0" style="display:noneflex;visibility:hidden"></iframe>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kritik & Saran</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="../bootstrap-5.3.3-dist/css/bootstrap.css">
+    <link href="../template/profile.css" rel="stylesheet">
 </head>
 
 <body>
-    <h2>Kritik & Saran</h2>
-    <?php if (isset($error)) : ?>
-        <p style="color:red;"><?= $error; ?></p>
-    <?php endif; ?>
-    <?php if (isset($success)) : ?>
-        <p style="color:green;"><?= $success; ?></p>
-    <?php endif; ?>
-    <form method="post">
-        <label for="isi_kritiksaran">Isi Kritik & Saran:</label><br>
-        <textarea name="isi_kritiksaran" required></textarea><br><br>
-        <button type="submit">Kirim</button>
-    </form><br>
-    <a href="tampil_kritik_saran.php">Kembali</a>
+<div class="sidebar">
+        <h2>Menu</h2>
+        <ul>
+        <li>
+            <a href="../user/tampil_profile.php" target="frame">
+                <i class="fas fa-user"></i> Profil
+            </a>
+        </li>
+        <li>
+            <a href="../user/tampil_kritik_saran.php" target="frame">
+                <i class="fas fa-comments"></i> Kritik & Saran Anda
+            </a>
+        </li>
+        <li>
+            <a href="../user/kritik_saran.php" target="frame">
+                <i class="fas fa-pencil-alt"></i> Tambah Kritik & Saran
+            </a>
+        </li>
+        <li>
+            <a href="logout.php" onclick="return confirm('Apakah Anda yakin ingin logout?');">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+        </li>
+        </ul>
+    </div>
+    <div class="sidebar">
+        <h2>Menu</h2>
+        <ul>
+        <li>
+            <a href="../user/tampil_profile.php" target="frame">
+                <i class="fas fa-user"></i> Profil
+            </a>
+        </li>
+        <li>
+            <a href="../user/tampil_kritik_saran.php" target="frame">
+                <i class="fas fa-comments"></i> Kritik & Saran Anda
+            </a>
+        </li>
+        <li>
+            <a href="../user/kritik_saran.php" target="frame">
+                <i class="fas fa-pencil-alt"></i> Tambah Kritik & Saran
+            </a>
+        </li>
+        <li>
+            <a href="logout.php" onclick="return confirm('Apakah Anda yakin ingin logout?');">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+        </li>
+        </ul>
+    </div>
+    <div class="container">
+        <div class="form-container">
+            <h2 class="text-center">Kritik & Saran</h2>
+
+            <?php if (isset($error)) : ?>
+                <div class="alert alert-danger" role="alert">
+                    <?= $error; ?>
+                </div>
+            <?php endif; ?>
+            <?php if (isset($success)) : ?>
+                <div class="alert alert-success" role="alert">
+                    <?= $success; ?>
+                </div>
+            <?php endif; ?>
+
+            <form method="post">
+                <div class="form-data mb-3">
+                    <label for="isi_kritiksaran" class="form-label">Isi Kritik & Saran:</label>
+                    <textarea name="isi_kritiksaran" id="isi_kritiksaran" class="form-control" rows="5" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Kirim</button>
+            </form>
+        </div>
+    </div>
+    <script src="../bootstrap-5.3.3-dist/js/bootstrap.bundle.js"></script>
 </body>
 </html>

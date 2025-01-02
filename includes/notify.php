@@ -19,7 +19,7 @@ function notify($phone, $message)
             'countryCode' => '62',
         ),
         CURLOPT_HTTPHEADER => array(
-            'Authorization: TOKEN' //Ganti Token mu
+            'Authorization: cXMnRU8FHnRfLTMQnpSY' //Ganti Token mu
         ),
     ));
 

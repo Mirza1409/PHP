@@ -30,46 +30,98 @@ $stmt->close();
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Tampil Kritik & Saran</title>
-</head>
-<body>
-    <h2>Kritik & Saran Anda</h2>
 
-    <!-- Form Filter -->
-    <form method="post" action="">
-        <label for="status_filter">Filter:</label>
-        <select name="status_filter" id="status_filter" onchange="this.form.submit()">
-            <option value="all" <?= $status_filter === 'all' ? 'selected' : '' ?>>Semua</option>
-            <option value="belum" <?= $status_filter === 'belum' ? 'selected' : '' ?>>Belum Ditanggapi</option>
-            <option value="sudah" <?= $status_filter === 'sudah' ? 'selected' : '' ?>>Sudah Ditanggapi</option>
-        </select>
-    </form>
-    <?php if (!empty($kritik_saran)) : ?>
-        <table border="1">
-            <tr>
-                <th>id_kritiksaran</th>
-                <th>Isi Kritik & Saran</th>
-                <th>Status</th>
-                <th>Tanggapan</th>
-                <th>Hapus</th>
-            </tr>
-            <?php foreach ($kritik_saran as $ks) : ?>
-            <tr>
-                <td><?= htmlspecialchars($ks['id_kritiksaran']) ?></td>
-                <td><?= htmlspecialchars($ks['isi_kritiksaran']) ?></td>
-                <td><?= htmlspecialchars($ks['status']) ?></td>
-                <td><?= htmlspecialchars($ks['tanggapan'] ?? 'Belum ada tanggapan') ?></td>
-                <td><a href=" ../user/delete_kritik_saran.php?id=<?=$ks['id_kritiksaran']?>">Hapus</a><td>
-            </tr>
-            <?php endforeach; ?>
-        </table>
+<head>
+    <iframe src="../user/profile.php" height="0" width="0" style="display:noneflex;visibility:hidden"></iframe>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tampil Kritik & Saran</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="../bootstrap-5.3.3-dist/css/bootstrap.css">
+    <link href="../template/profile.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="sidebar">
+        <h2>Menu</h2>
+        <ul>
+        <li>
+            <a href="../user/tampil_profile.php" target="frame">
+                <i class="fas fa-user"></i> Profil
+            </a>
+        </li>
+        <li>
+            <a href="../user/tampil_kritik_saran.php" target="frame">
+                <i class="fas fa-comments"></i> Kritik & Saran Anda
+            </a>
+        </li>
+        <li>
+            <a href="../user/kritik_saran.php" target="frame">
+                <i class="fas fa-pencil-alt"></i> Tambah Kritik & Saran
+            </a>
+        </li>
+        <li>
+            <a href="logout.php" onclick="return confirm('Apakah Anda yakin ingin logout?');">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+        </li>
+
+        </ul>
+    </div>
+    <div class="container">
+        <h2 class="text-center mb-4">Kritik & Saran Anda</h2>
+        <!-- Form Filter -->
+        <form method="post" action="" class="mb-4">
+            <div class="filter-container">
+                <div class="row">
+                    <div class="col-md-6 offset-md-3">
+                        <label for="status_filter" class="form-label">Filter</label>
+                        <select name="status_filter" id="status_filter" class="form-select" onchange="this.form.submit()">
+                            <option value="all" <?= $status_filter === 'all' ? 'selected' : '' ?>>Semua</option>
+                            <option value="belum" <?= $status_filter === 'belum' ? 'selected' : '' ?>>Belum Ditanggapi</option>
+                            <option value="sudah" <?= $status_filter === 'sudah' ? 'selected' : '' ?>>Sudah Ditanggapi</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <div class="form-kritik">
+            <?php if (!empty($kritik_saran)) : ?>
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th >ID Kritik&Saran</th>
+                            <th>Isi Kritik&Saran</th>
+                            <th>Status</th>
+                            <th>Tanggapan</th>
+                            <th>Hapus</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($kritik_saran as $ks) : ?>
+                            <tr>
+                                <td><?= htmlspecialchars($ks['id_kritiksaran']) ?></td>
+                                <td><?= htmlspecialchars($ks['isi_kritiksaran']) ?></td>
+                                <td><?= htmlspecialchars($ks['status']) ?></td>
+                                <td><?= htmlspecialchars($ks['tanggapan'] ?? 'Belum ada tanggapan') ?></td>
+                                <td>
+                                    <a href="../user/delete_kritik_saran.php?id=<?= $ks['id_kritiksaran'] ?>" class="btn btn-danger btn-sm">
+                                        Hapus
+                                    </a>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+        </div>
     <?php else : ?>
-        <p>Kritik & Saran tidak ditemukan!</p>
-    <?php endif; ?><br>
-    <a href="../user/kritik_saran.php">Tambahkan Kritik saran</a><br>
-    <a href="profile.php">Kembali</a>
-    
+        <p class="text-center text-warning">Kritik & Saran tidak ditemukan!</p>
+    <?php endif; ?>
+    </div>
+
+    <script src="../bootstrap-5.3.3-dist/js/bootstrap.bundle.js"></script>
 </body>
+
 </html>
+

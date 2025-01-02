@@ -25,8 +25,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                          jenis_member = '$jenis_member', 
                          berlaku_s_d = '$berlaku_s_d' 
                      WHERE id_member = $id";
-    if (mysqli_query($conn, $update_query)) {
-        redirect('members.php');
+    if (mysqli_query($conn, $update_query)) {  
+        echo "Data berhasil diupdate";
     } else {
         $error = "Gagal mengedit member!";
     }
@@ -37,8 +37,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <title>Edit Member</title>
+    <link rel="stylesheet" href="../bootstrap-5.3.3-dist/css/bootstrap.css">
+    <link href="../template/edit_member.css" rel="stylesheet">
+    
 </head>
 <body>
+    <a href="members_perpanjang_membership.php" class="btn btn-warning">Kembali</a>
     <h2>Edit Member</h2>
     <form method="post">
         <label>Nama :</label><br>
@@ -63,9 +67,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </select><br>
         <label>Berlaku Sampai:</label><br>
         <input type="date" name="berlaku_s_d" value="<?= $member['berlaku_s_d'] ?>" required><br><br>
-        <button type="submit">Simpan</button>
+        <button type="submit">Simpan</button>|                                  |
     </form>
     <?php if (isset($error)) echo "<p style='color:red;'>$error</p>"; ?>
-    <a href="members.php">Kembali</a>
+    
 </body>
 </html>

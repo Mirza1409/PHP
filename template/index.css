@@ -1,0 +1,87 @@
+body {
+    background-image: url('Bodyfitlogo.png'); /* Ganti dengan path gambar Anda */
+    background-size: cover; /* Mengatur gambar agar menutupi seluruh latar belakang */
+    background-position: center; /* Memusatkan gambar */
+    color: #39FF14;
+    font-family: 'Roboto', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+.login-container {
+    max-width: 400px;
+    padding: 30px;
+    border: 1px solid #39FF14;
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.7); /* Transparansi dengan warna hitam */
+    box-shadow: 0 0 10px rgba(57, 255, 20, 0.5);
+}
+.form-control {
+    background-color: #fff;
+    color: #000;
+    border: 1px solid #39FF14;
+}
+.form-control:focus {
+    border-color: #39FF14;
+    box-shadow: 0 0 5px rgba(57, 255, 20, 0.5);
+}
+.btn-custom {
+    background-color: #39FF14;
+    color: #000;
+    border: none;
+    transition: background-color 0.3s;
+}
+.btn-custom:hover {
+    background-color: #32CD32;
+}
+.login-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+.login-header h2 {
+    font-weight: 700;
+}
+.login-header p {
+    font-weight: 400;
+    color: #ccc;
+}
+body {
+    background-color: #f8f9fa;
+    color: #2d3436;
+}
+.btn-green {
+    background-color: #28a745;
+    color: white;
+}
+.btn-green:hover {
+    background-color: #218838;
+    color: white;
+}
+.table thead {
+    background-color: #28a745;
+    color: white;
+}
+.table tbody tr:nth-child(even) {
+    background-color: #e9f5ec;
+}
+body {
+    background-color: #f8f9fa;
+    color: #2d3436;
+}
+.btn-green {
+    background-color: #28a745;
+    color: white;
+}
+.btn-green:hover {
+    background-color: #218838;
+    color: white;
+}
+.table thead {
+    background-color: #28a745;
+    color: white;
+}
+.table tbody tr:nth-child(even) {
+    background-color: #e9f5ec;
+}

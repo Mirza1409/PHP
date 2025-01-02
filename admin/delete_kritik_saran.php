@@ -11,7 +11,7 @@ $query = "DELETE FROM kritik_saran WHERE id_kritiksaran = ?";
 $stmt = mysqli_prepare($conn, $query);
 mysqli_stmt_bind_param($stmt, 'i', $id);
 if (mysqli_stmt_execute($stmt)) {
-    redirect('../admin/kritik_saran.php');
+    redirect('../admin/kritik_saran_hapus.php');
 } else {
     echo "Gagal menghapus member!";
 }

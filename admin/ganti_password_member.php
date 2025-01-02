@@ -3,24 +3,30 @@ include '../includes/db.php';
 include '../includes/functions.php';
 is_logged_in();
 if (!is_admin()) {
-    redirect('/index.php');
+    redirect('../index.php');
 }
 
 $error = '';
 $success = '';
 
-// Mendapatkan ID member dari URL
-$id = $_GET['id'];
+// Ambil username dari parameter GET
+$username = $_GET['username'] ?? '';
 
-// Mengambil username member berdasarkan ID
-$query = "SELECT username FROM members WHERE id_member = ?";
-$stmt = $conn->prepare($query);
-$stmt->bind_param("i", $id);
-$stmt->execute();
-$stmt->bind_result($username);
-$stmt->fetch();
-$stmt->close();
+// Validasi jika username tidak ada
+if (empty($username)) {
+    $error = "Username tidak valid.";
+}
 
+// Ambil password lama dari database
+$old_password_query = "SELECT password FROM users WHERE username = ?";
+$old_password_stmt = $conn->prepare($old_password_query);
+$old_password_stmt->bind_param("s", $username);
+$old_password_stmt->execute();
+$old_password_stmt->bind_result($old_password_hashed);
+$old_password_stmt->fetch();
+$old_password_stmt->close();
+
+// Proses ganti password
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $new_password = trim($_POST['new_password']);
     $confirm_password = trim($_POST['confirm_password']);
@@ -30,6 +36,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $error = "Semua field harus diisi.";
     } elseif (strlen($new_password) < 6) {
         $error = "Password minimal 6 karakter.";
+    } elseif (password_verify($new_password, $old_password_hashed)) { // Bandingkan dengan password lama
+        $error = "Password baru tidak boleh sama dengan password lama.";
     } elseif ($new_password !== $confirm_password) {
         $error = "Password dan konfirmasi password tidak cocok.";
     } else {
@@ -57,10 +65,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ganti Password Member</title>
+    <link rel="stylesheet" href="../bootstrap-5.3.3-dist/css/bootstrap.css">
+    <link href="../template/ganti_password_member.css" rel="stylesheet">
+    
 </head>
 <body>
-
-    <h2>Ganti Password Member</h2>
+    <h1>Ganti Password Member</h1>
 
     <?php if (!empty($error)): ?>
         <div style="color: red;"><?php echo htmlspecialchars($error); ?></div>
@@ -71,17 +81,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <?php endif; ?>
 
     <form action="" method="post">
-        <label>Username :</label><br>
+        <label>Username:</label><br>
         <input type="text" name="username" value="<?= htmlspecialchars($username) ?>" readonly required><br>
 
-        <label for="new_password">Password Baru :</label><br>
+        <label for="new_password">Password Baru:</label><br>
         <input type="password" name="new_password" id="new_password" required><br>
 
-        <label for="confirm_password">Konfirmasi Password Baru :</label><br>
+        <label for="confirm_password">Konfirmasi Password Baru:</label><br>
         <input type="password" name="confirm_password" id="confirm_password" required><br>
 
         <button type="submit">Ganti Password</button>
     </form>
-    <a href="members.php">Kembali</a>
+    <a href="members_ganti_password.php" class="btn btn-warning">Kembali</a>
 </body>
 </html>

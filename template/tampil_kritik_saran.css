@@ -1,0 +1,56 @@
+body {
+    background-color: #ffffff; 
+}
+.container {
+    background-color: #e8f5e9;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+h2 {
+    color: #4CAF50; /* Hijau cerah */
+    font-weight: bold;
+}
+.table th {
+    background-color: #4CAF50;
+    color: white;
+}
+.btn-primary {
+    background-color: #47d74c;
+    border-color: #47d74c;
+}
+.btn-primary:hover {
+    background-color: #278a2c;
+    border-color: #278a2c;
+}
+.form-select {
+    border: 2px solid #4CAF50;
+    margin-right: 100px;
+}
+.form-select:hover {
+    border-color: #4CAF50;
+    box-shadow: 0 0 4px #4CAF50;
+}
+.btn-danger {
+    background-color: #f44336;
+    border-color: #f44336;
+}
+.btn-danger:hover {
+    background-color: #b50300;
+    border-color: #b50300;
+}
+p.text-warning {
+    color: #ffa726; /* Oranye lembut */
+}
+
+.filter-container {
+  display: flex;
+}
+
+.filter {
+  margin-right: auto; /* Mengarahkan elemen ke tepi kiri */
+  font-size: 16px;
+  font-weight: bold;
+  margin-left: 10px;
+}
+

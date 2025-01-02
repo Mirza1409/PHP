@@ -43,27 +43,34 @@ $result = $stmt->get_result();
 <head>
     <meta charset="UTF-8">
     <title>Kelola Member</title>
+    <link rel="stylesheet" href="../bootstrap-5.3.3-dist/css/bootstrap.css">
+    <link href="../template/members_perpanjang_membership.css" rel="stylesheet">
 </head>
 <body>
-    <h2>Daftar Member</h2>
+<div class="container py-4">
+    <h2 class="text-center mb-4">Perpanjang Membership</h2>
 
     <!-- Form Pencarian -->
-    <form method="post" action="">
-        <input type="text" name="search" placeholder="Nama (Username)" value="<?= htmlspecialchars($search_username) ?>">
-        <button type="submit">Cari</button>
+    <form method="post" action="" class="form-inline mb-3">
+        <div class="form-group mx-sm-3 mb-2">
+            <input type="text" name="search" class="form-control" placeholder="Nama (Username)" value="<?= htmlspecialchars($search_username) ?>">
+        </div>
+        <button type="submit" class="btn btn-green mb-2">Cari</button>
     </form>
 
     <!-- Form Filter -->
-    <form method="post" action="">
-        <label for="filter">Filter:</label>
-        <select name="filter" id="filter" onchange="this.form.submit()">
+    <form method="post" action="" class="form-inline mb-4">
+        <label for="filter" class="mr-2">Filter:</label>
+        <select name="filter" id="filter" class="form-control mr-2" onchange="this.form.submit()">
             <option value="all" <?= $filter === 'all' ? 'selected' : '' ?>>Semua</option>
             <option value="kurang_7_hari" <?= $filter === 'kurang_7_hari' ? 'selected' : '' ?>>Masa Berlaku Kurang dari 7 Hari</option>
             <option value="habis" <?= $filter === 'habis' ? 'selected' : '' ?>>Masa Berlaku Sudah Habis</option>
         </select>
     </form>
 
-    <table border="1">
+    <!-- Tabel Data Member -->
+    <table class="table table-bordered">
+        <thead>
         <tr>
             <th>ID</th>
             <th>Nama (Username)</th>
@@ -75,8 +82,10 @@ $result = $stmt->get_result();
             <th>Berlaku Sampai Dengan</th>
             <th>Sisa Masa Berlaku</th>
             <th>Role</th>
-            <th>Kelola Data Member Gym</th>
+            <th>Atur</th>
         </tr>
+        </thead>
+        <tbody>
         <?php while ($row = $result->fetch_assoc()): ?>
         <tr>
             <td><?= $row['id_member'] ?></td>
@@ -94,27 +103,30 @@ $result = $stmt->get_result();
                 $interval = $today->diff($berlaku_s_d);
                 $days_remaining = $interval->days;
                 if ($berlaku_s_d < $today) {
-                    echo "Masa Berlaku Membership Telah Habis!";
+                    echo "<span class='text-danger'>Masa Berlaku Membership Telah Habis!</span>";
                 } else {
-                    echo $days_remaining . " Hari";
+                    echo "$days_remaining Hari";
                 }
                 ?>
             </td>
             <td><?= htmlspecialchars($row['role']) ?></td>
-            <td>
-                <a href="edit_member.php?id=<?= $row['id_member'] ?>">Perpanjang Membership</a> ||
-                <a href="delete_member.php?id=<?= $row['id_member'] ?>" onclick="return confirm('Apakah Anda yakin ingin menghapus member ini?');">Hapus Member</a>
+            <td>                
+                <a href="edit_member.php?id=<?= $row['id_member'] ?>" class="btn btn-sm btn-primary">Perpanjang Membership</a>
             </td>
         </tr>
         <?php endwhile; ?>
+        </tbody>
     </table>
+    <a href="dashboard.php" class="btn btn-warning">Kembali</a>
+</div>
 
-    <?php
-    // Menutup statement dan koneksi
-    $stmt->close();
-    $conn->close();
-    ?>
-    <a href="add_member.php">Tambah Member Baru</a><br>
-    <a href="dashboard.php">Kembali</a>
+<?php
+// Menutup statement dan koneksi
+$stmt->close();
+$conn->close();
+?>
+
+<!-- Tambahkan link JavaScript Bootstrap -->
+<script src="../bootstrap-5.3.3-dist/js/bootstrap.bundle.js"></script>
 </body>
 </html>

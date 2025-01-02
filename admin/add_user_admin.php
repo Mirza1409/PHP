@@ -9,7 +9,7 @@ if (!is_admin()) {
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = trim($_POST['username']);
     $password = trim($_POST['password']);
-    $confirm_password = trim($_POST['confirm_password']); 
+    $confirm_password = trim($_POST['confirm_password']);
     $role = 'admin';
 
     // Validasi input
@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $error = "Username harus antara 3 dan 20 karakter.";
     } elseif (strlen($password) < 6) {
         $error = "Password minimal 6 karakter.";
-    } elseif ($password !== $confirm_password) { 
+    } elseif ($password !== $confirm_password) {
         $error = "Password dan konfirmasi password tidak cocok.";
     } else {
         // Cek apakah username sudah ada
@@ -40,7 +40,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->bind_param("sss", $username, $password_hashed, $role);
             if ($stmt->execute()) {
                 $success = "Admin baru berhasil ditambahkan!";
-                redirect('tampil_user_admin.php'); // Redirect ke halaman members setelah berhasil
             } else {
                 $error = "Gagal menambahkan admin: " . htmlspecialchars($stmt->error);
             }
@@ -57,6 +56,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tambah Admin</title>
+    <link rel="stylesheet" href="../bootstrap-5.3.3-dist/css/bootstrap.css">
+    <link href="../template/add_user_admin.css" rel="stylesheet">
 </head>
 <body>
     <h1>Tambah Admin</h1>
@@ -77,10 +78,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <input type="password" name="password" id="password" required><br>
 
         <label for="confirm_password">Konfirmasi Password:</label><br>
-        <input type="password" name="confirm_password" id="confirm_password" required></br> 
+        <input type="password" name="confirm_password" id="confirm_password" required><br>
 
         <button type="submit">Tambah Admin</button>
     </form>
-    <a href="members.php">Kembali</a>
+    <a href="tampil_tambah_admin.php" class="btn btn-warning">Kembali</a>
 </body>
 </html>

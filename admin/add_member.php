@@ -7,21 +7,25 @@ if (!is_admin()) {
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = trim($_POST['username']);
-    $password = trim($_POST['password']);
-    $confirm_password = trim($_POST['confirm_password']); 
-    $role = 'user';
+    $conn->begin_transaction(); // Mulai transaksi
 
-    // Validasi input
-    if (empty($username) || empty($password) || empty($confirm_password)) {
-        $error = "Semua field harus diisi.";
-    } elseif (strlen($username) < 3 || strlen($username) > 20) {
-        $error = "Username harus antara 3 dan 20 karakter.";
-    } elseif (strlen($password) < 6) {
-        $error = "Password minimal 6 karakter.";
-    } elseif ($password !== $confirm_password) { 
-        $error = "Password dan konfirmasi password tidak cocok.";
-    } else {
+    try {
+        $username = trim($_POST['username']);
+        $password = trim($_POST['password']);
+        $confirm_password = trim($_POST['confirm_password']); 
+        $role = 'user';
+
+        // Validasi input user
+        if (empty($username) || empty($password) || empty($confirm_password)) {
+            throw new Exception("Semua field harus diisi.");
+        } elseif (strlen($username) < 3 || strlen($username) > 20) {
+            throw new Exception("Username harus antara 3 dan 20 karakter.");
+        } elseif (strlen($password) < 6) {
+            throw new Exception("Password minimal 6 karakter.");
+        } elseif ($password !== $confirm_password) { 
+            throw new Exception("Password dan konfirmasi password tidak cocok.");
+        }
+
         $password_hashed = password_hash($password, PASSWORD_DEFAULT);
 
         // Cek apakah username sudah ada
@@ -32,55 +36,53 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $check_result = $check_stmt->get_result();
 
         if ($check_result->num_rows > 0) {
-            $error = "Username sudah ada, silakan pilih username lain.";
-        } else {
-            $nama = htmlspecialchars(trim($_POST['nama']));
-            if ($nama !== $username) {
-                $error = "Nama member harus sesuai dengan username.";
-            } else {
-                // Siapkan dan bind untuk menambahkan user
-                $stmt = $conn->prepare("INSERT INTO users (username, password, role) VALUES (?, ?, ?)");
-                $stmt->bind_param("sss", $username, $password_hashed, $role);
-                if ($stmt->execute()) {
-                    // Jika berhasil menambahkan user, lanjutkan untuk menambahkan member
-                    $jenis_kelamin = htmlspecialchars($_POST['jenis_kelamin']);
-                    $alamat = htmlspecialchars(trim($_POST['alamat']));
-                    $status = htmlspecialchars($_POST['status']);
-                    $no_hp = htmlspecialchars(trim($_POST['no_hp']));
-                    $jenis_member = htmlspecialchars($_POST['jenis_member']);
-                    $berlaku_s_d = htmlspecialchars($_POST['berlaku_s_d']);
-
-                    // Validasi detail member
-                    if (empty($jenis_kelamin) || empty($alamat) || empty($no_hp) || empty($jenis_member) || empty($berlaku_s_d)) {
-                        $error = "Semua field harus diisi.";
-                    } elseif (!is_numeric($no_hp)) {
-                        $error = "No HP harus berupa angka.";
-                    } elseif (strtotime($berlaku_s_d) <= time()) {
-                        $error = "Tanggal berlaku harus lebih besar dari hari ini.";
-                    } else {
-                        // Menambahkan member
-                        $query = "INSERT INTO members (username, jenis_kelamin, alamat, status, no_hp, jenis_member, berlaku_s_d) VALUES (?, ?, ?, ?, ?, ?, ?)";
-                        $stmt_member = $conn->prepare($query);
-                        $stmt_member->bind_param("sssssss", $username, $jenis_kelamin, $alamat, $status, $no_hp, $jenis_member, $berlaku_s_d);
-
-                        if ($stmt_member->execute()) {
-                            $success = "Member baru berhasil ditambahkan!". htmlspecialchars($stmt_member->succes);
-                            redirect('members.php');
-                        } else {
-                            $error = "Gagal menambah member: " . htmlspecialchars($stmt_member->error);
-                        }
-                        $stmt_member->close();
-                    }
-                } else {
-                    $error = "Error: " . htmlspecialchars($stmt->error);
-                }
-                $stmt->close();
-            }
+            throw new Exception("Username sudah ada, silakan pilih username lain.");
         }
-        $check_stmt->close();
+
+        $nama = htmlspecialchars(trim($_POST['nama']));
+        if ($nama !== $username) {
+            throw new Exception("Nama member harus sesuai dengan username.");
+        }
+
+        // Tambah user
+        $stmt = $conn->prepare("INSERT INTO users (username, password, role) VALUES (?, ?, ?)");
+        $stmt->bind_param("sss", $username, $password_hashed, $role);
+        if (!$stmt->execute()) {
+            throw new Exception("Gagal menambah user: " . htmlspecialchars($stmt->error));
+        }
+
+        // Validasi dan tambah member
+        $jenis_kelamin = htmlspecialchars(trim($_POST['jenis_kelamin']));
+        $alamat = htmlspecialchars(trim($_POST['alamat']));
+        $status = htmlspecialchars(trim($_POST['status']));
+        $no_hp = htmlspecialchars(trim($_POST['no_hp']));
+        $jenis_member = htmlspecialchars(trim($_POST['jenis_member']));
+        $berlaku_s_d = htmlspecialchars(trim($_POST['berlaku_s_d']));
+
+        if (empty($jenis_kelamin) || empty($alamat) || empty($status) || empty($no_hp) || empty($jenis_member) || empty($berlaku_s_d)) {
+            throw new Exception("Semua field harus diisi.");
+        } elseif (!is_numeric($no_hp)) {
+            throw new Exception("No HP harus berupa angka.");
+        } elseif (strtotime($berlaku_s_d) <= time()) {
+            throw new Exception("Tanggal berlaku harus lebih besar dari hari ini.");
+        }
+
+        $query = "INSERT INTO members (username, jenis_kelamin, alamat, status, no_hp, jenis_member, berlaku_s_d) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        $stmt_member = $conn->prepare($query);
+        $stmt_member->bind_param("sssssss", $username, $jenis_kelamin, $alamat, $status, $no_hp, $jenis_member, $berlaku_s_d);
+        if (!$stmt_member->execute()) {
+            throw new Exception("Gagal menambah member: " . htmlspecialchars($stmt_member->error));
+        }
+
+        $conn->commit(); // Commit transaksi jika semua berhasil
+        $success = "User dan member berhasil ditambahkan!";
+    } catch (Exception $e) {
+        $conn->rollback(); // Rollback transaksi jika ada yang gagal
+        $error = $e->getMessage();
     }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="id">
@@ -88,6 +90,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tambah Pengguna</title>
+    <link rel="stylesheet" href="../bootstrap-5.3.3-dist/css/bootstrap.css">
+    <link href="../template/add_member.css" rel="stylesheet">
 </head>
 <body>
     <h1>Tambah User</h1>
@@ -123,8 +127,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <label for="alamat">Alamat :</label><br>
         <input type="text" name="alamat" id="alamat" required><br>
+        
         <label>Status Member :</label><br>
-
         <select name="status" id="status" required>
             <option value="Umum">Umum</option>
             <option value="Mahasiswa">Mahasiswa</option>
@@ -132,9 +136,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <label for="no_hp">No HP :</label><br>
         <input type="text" name="no_hp" id="no_hp" required><br>
-
+        
         <label>Jenis Member :</label><br>
-        <select name="jenis_member" required>
+        <select name="jenis_member" id="jenis_member" required>
             <option value="Member Bulanan">Member Bulanan</option>
             <option value="Paket 3 Bulan">Paket 3 Bulan</option>
             <option value="Paket 6 Bulan">Paket 6 Bulan</option>
@@ -143,9 +147,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <label for="berlaku_s_d">Berlaku S/D :</label><br>
         <input type="date" name="berlaku_s_d" id="berlaku_s_d" required><br>
+        <button type="submit" class="btn btn-success">Tambah Pengguna</button>
 
-        <button type="submit">Tambah Pengguna</button>
+        <!-- <button type="submit">Tambah Pengguna</button> -->
     </form>
-    <a href="members.php">Kembali</a>
+    <a href="members_tambah_member.php" class="btn btn-warning">Kembali</a>
 </body>
 </html>

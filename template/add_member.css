@@ -1,0 +1,23 @@
+body {
+    background-color: #f8f9fa; /* Warna latar putih */
+}
+h1 {
+    color: #28a745; /* Hijau untuk judul */
+}
+.btn-green {
+    background-color: #28a745; /* Hijau */
+    color: white;
+}
+.btn-green:hover {
+    background-color: #218838; /* Hijau lebih gelap saat hover */
+}
+.form-label {
+    color: #28a745; /* Hijau untuk label */
+}
+.form-control:focus {
+    border-color: #28a745; /* Fokus hijau */
+    box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+}
+.alert {
+    margin-top: 10px;
+}

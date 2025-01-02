@@ -13,3 +13,4 @@ if (mysqli_stmt_execute($stmt)) {
     echo "Gagal menghapus member!";
 }
 mysqli_stmt_close($stmt);
+?>
